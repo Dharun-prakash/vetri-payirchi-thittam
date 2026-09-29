@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>FitBuddy - Admin Dashboard</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', path='style.css') }}"
+    >
+
+</head>
+
+
+<body>
+
+<header class="navbar">
+
+    <div class="brand">
+        🏋️ FitBuddy
+    </div>
+
+    <nav>
+        <a href="/">Home</a>
+        <a href="/docs">API Docs</a>
+    </nav>
+
+</header>
+
+
+<main class="admin-container">
+
+    <div class="admin-header">
+
+        <div>
+
+            <span class="small-label">
+                ADMIN DASHBOARD
+            </span>
+
+            <h1>
+                All Users & Plans
+            </h1>
+
+            <p>
+                View registered users and their generated plans.
+            </p>
+
+        </div>
+
+
+        <div class="user-count">
+            {{ users|length }} Users
+        </div>
+
+    </div>
+
+
+    {% if users %}
+
+        {% for user in users %}
+
+        <section class="user-card">
+
+            <div class="user-card-header">
+
+                <div>
+
+                    <h2>
+                        {{ user.username }}
+                    </h2>
+
+                    <p>
+                        User ID:
+                        <strong>{{ user.user_id }}</strong>
+                    </p>
+
+                </div>
+
+                <span class="goal-badge">
+                    {{ user.goal.title() }}
+                </span>
+
+            </div>
+
+
+            <div class="admin-details">
+
+                <div>
+                    <span>Age</span>
+                    <strong>{{ user.age }}</strong>
+                </div>
+
+                <div>
+                    <span>Weight</span>
+                    <strong>{{ user.weight }} kg</strong>
+                </div>
+
+                <div>
+                    <span>Intensity</span>
+                    <strong>{{ user.intensity.title() }}</strong>
+                </div>
+
+                <div>
+                    <span>Created</span>
+                    <strong>
+                        {{ user.created_at.strftime('%Y-%m-%d %H:%M') if user.created_at else 'N/A' }}
+                    </strong>
+                </div>
+
+            </div>
+
+
+            <div class="plan-columns">
+
+                <div>
+
+                    <h3>
+                        Original Plan
+                    </h3>
+
+                    <pre class="admin-plan">{{ user.original_plan }}</pre>
+
+                </div>
+
+
+                <div>
+
+                    <h3>
+                        Updated Plan
+                    </h3>
+
+                    {% if user.updated_plan %}
+
+                        <pre class="admin-plan">{{ user.updated_plan }}</pre>
+
+                    {% else %}
+
+                        <div class="empty-state">
+                            No updated plan yet.
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+
+            {% if user.feedback %}
+
+            <div class="feedback-box">
+
+                <strong>
+                    User Feedback
+                </strong>
+
+                <p>
+                    {{ user.feedback }}
+                </p>
+
+            </div>
+
+            {% endif %}
+
+
+            {% if user.nutrition_tip %}
+
+            <div class="tip">
+
+                <strong>
+                    Nutrition / Recovery:
+                </strong>
+
+                {{ user.nutrition_tip }}
+
+            </div>
+
+            {% endif %}
+
+        </section>
+
+        {% endfor %}
+
+
+    {% else %}
+
+        <section class="content-card empty-state">
+
+            <h2>
+                No users yet
+            </h2>
+
+            <p>
+                Create your first fitness plan from the home page.
+            </p>
+
+            <a
+                href="/"
+                class="primary-button"
+            >
+                Create Plan
+            </a>
+
+        </section>
+
+    {% endif %}
+
+</main>
+
+
+<footer>
+
+    <p>
+        FitBuddy Admin Dashboard © 2026
+    </p>
+
+</footer>
+
+</body>
+</html>

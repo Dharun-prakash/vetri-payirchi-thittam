@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>FitBuddy - AI Fitness Planner</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', path='style.css') }}"
+    >
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+</head>
+
+<body>
+
+<header class="navbar">
+    <div class="brand">
+        🏋️ FitBuddy
+    </div>
+
+    <nav>
+        <a href="/">Home</a>
+        <a href="/view-all-users">Admin</a>
+        <a href="/docs">API Docs</a>
+    </nav>
+</header>
+
+
+<main class="hero">
+
+    <section class="hero-content">
+
+        <div class="badge">
+            ✨ AI FITNESS PLAN GENERATOR
+        </div>
+
+        <h1>
+            Your Personal
+            <span>AI Fitness Coach</span>
+        </h1>
+
+        <p class="subtitle">
+            Generate a personalized 7-day workout plan and
+            nutrition guidance based on your fitness goals.
+        </p>
+
+    </section>
+
+
+    <section class="card form-card">
+
+        <h2>Create Your Fitness Plan</h2>
+
+        <p class="card-description">
+            Enter your information and let FitBuddy create
+            your personalized plan.
+        </p>
+
+
+        {% if error %}
+        <div class="alert error">
+            {{ error }}
+        </div>
+        {% endif %}
+
+
+        <form
+            action="/generate-workout"
+            method="post"
+        >
+
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label for="username">
+                        Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        placeholder="Enter your name"
+                        required
+                    >
+                </div>
+
+
+                <div class="form-group">
+                    <label for="user_id">
+                        User ID
+                    </label>
+
+                    <input
+                        type="text"
+                        id="user_id"
+                        name="user_id"
+                        placeholder="Example: FB001"
+                        required
+                    >
+                </div>
+
+
+                <div class="form-group">
+                    <label for="age">
+                        Age
+                    </label>
+
+                    <input
+                        type="number"
+                        id="age"
+                        name="age"
+                        min="13"
+                        max="100"
+                        placeholder="Age"
+                        required
+                    >
+                </div>
+
+
+                <div class="form-group">
+                    <label for="weight">
+                        Weight (kg)
+                    </label>
+
+                    <input
+                        type="number"
+                        id="weight"
+                        name="weight"
+                        min="1"
+                        max="500"
+                        step="0.1"
+                        placeholder="Weight"
+                        required
+                    >
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="goal">
+                        Fitness Goal
+                    </label>
+
+                    <select
+                        id="goal"
+                        name="goal"
+                        required
+                    >
+
+                        <option value="">
+                            Select your goal
+                        </option>
+
+                        <option value="weight loss">
+                            Weight Loss
+                        </option>
+
+                        <option value="muscle gain">
+                            Muscle Gain
+                        </option>
+
+                        <option value="general wellness">
+                            General Wellness
+                        </option>
+
+                        <option value="flexibility">
+                            Flexibility
+                        </option>
+
+                        <option value="strength">
+                            Strength
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="intensity">
+                        Workout Intensity
+                    </label>
+
+                    <select
+                        id="intensity"
+                        name="intensity"
+                        required
+                    >
+
+                        <option value="">
+                            Select intensity
+                        </option>
+
+                        <option value="low">
+                            Low
+                        </option>
+
+                        <option value="medium">
+                            Medium
+                        </option>
+
+                        <option value="high">
+                            High
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="primary-button"
+            >
+                Generate My Plan →
+            </button>
+
+        </form>
+
+    </section>
+
+</main>
+
+
+<footer>
+    <p>
+        FitBuddy © 2026 · AI-powered fitness planning
+    </p>
+</footer>
+
+</body>
+</html>

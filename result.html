@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>FitBuddy - Your Plan</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', path='style.css') }}"
+    >
+
+</head>
+
+
+<body>
+
+<header class="navbar">
+
+    <div class="brand">
+        🏋️ FitBuddy
+    </div>
+
+    <nav>
+        <a href="/">New Plan</a>
+        <a href="/view-all-users">Admin</a>
+        <a href="/docs">API Docs</a>
+    </nav>
+
+</header>
+
+
+<main class="result-container">
+
+    {% if message %}
+    <div class="alert success">
+        {{ message }}
+    </div>
+    {% endif %}
+
+
+    {% if error %}
+    <div class="alert error">
+        {{ error }}
+    </div>
+    {% endif %}
+
+
+    <section class="profile-card">
+
+        <div>
+
+            <span class="small-label">
+                PERSONALIZED PLAN FOR
+            </span>
+
+            <h1>
+                {{ user.username }}
+            </h1>
+
+        </div>
+
+
+        <div class="profile-grid">
+
+            <div>
+                <span>User ID</span>
+                <strong>{{ user.user_id }}</strong>
+            </div>
+
+            <div>
+                <span>Age</span>
+                <strong>{{ user.age }}</strong>
+            </div>
+
+            <div>
+                <span>Weight</span>
+                <strong>{{ user.weight }} kg</strong>
+            </div>
+
+            <div>
+                <span>Goal</span>
+                <strong>{{ user.goal.title() }}</strong>
+            </div>
+
+            <div>
+                <span>Intensity</span>
+                <strong>{{ user.intensity.title() }}</strong>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section class="content-card">
+
+        <div class="section-heading">
+
+            <span class="icon">
+                🏋️
+            </span>
+
+            <div>
+                <h2>
+                    7-Day Workout Plan
+                </h2>
+
+                <p>
+                    Your personalized fitness schedule
+                </p>
+            </div>
+
+        </div>
+
+
+        <pre class="workout-plan">{{ workout_plan }}</pre>
+
+    </section>
+
+
+    <section class="content-card nutrition-card">
+
+        <div class="section-heading">
+
+            <span class="icon">
+                🥗
+            </span>
+
+            <div>
+                <h2>
+                    Nutrition & Recovery Tip
+                </h2>
+
+                <p>
+                    Supporting your fitness goal
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="tip">
+            {{ nutrition_tip }}
+        </div>
+
+    </section>
+
+
+    <section class="content-card">
+
+        <div class="section-heading">
+
+            <span class="icon">
+                🔄
+            </span>
+
+            <div>
+
+                <h2>
+                    Improve Your Plan
+                </h2>
+
+                <p>
+                    Tell FitBuddy what you want to change.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <form
+            action="/submit-feedback"
+            method="post"
+        >
+
+            <input
+                type="hidden"
+                name="user_id"
+                value="{{ user.user_id }}"
+            >
+
+
+            <div class="form-group">
+
+                <label for="feedback">
+                    Your feedback
+                </label>
+
+                <textarea
+                    id="feedback"
+                    name="feedback"
+                    rows="5"
+                    placeholder="Example: Add more cardio and include an extra recovery day."
+                    required
+                ></textarea>
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="primary-button"
+            >
+                Update My Plan →
+            </button>
+
+        </form>
+
+    </section>
+
+
+    <div class="center">
+
+        <a
+            href="/"
+            class="secondary-button"
+        >
+            ← Create Another Plan
+        </a>
+
+    </div>
+
+</main>
+
+
+<footer>
+
+    <p>
+        FitBuddy © 2026
+    </p>
+
+</footer>
+
+</body>
+</html>
